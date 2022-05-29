@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
-</head>
-<body>
+
     <script src="./snk.js"></script>
-</body>
+  </head>
+  <body onload="initGui(board)">
+    <div id="container"></div>
+    <div id="controls">
+      <div class="up-down">
+        <button class="move-button up down" id="up" onclick="move(UP)">▲</button>
+      </div>
+      <div class="left-right">
+        <button class="move-button left right" id="left" onclick="move(LEFT)">◀</button>
+        <button class="move-button left right" id="right" onclick="move(RIGHT)">▶</button>
+      </div>
+      <div class="up-down">
+        <button class="move-button up down" id="down" onclick="move(DOWN)">▼</button>
+      </div>
+    </div>
+    <div id="message"></div>
+  </body>
 </html>

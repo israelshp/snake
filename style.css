@@ -1,0 +1,48 @@
+tr,
+td {
+  /* border: 1px solid lightgray; */
+  width: 10px;
+  height: 10px;
+}
+
+table {
+  /* border-collapse: collapse; */
+  border: 1px solid white;
+
+  border: 1px solid #1c6ea4;
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+
+td[data-fill="1"] {
+  background-color: black;
+}
+td[data-fill="x"] {
+  background-color: red;
+}
+td[data-fill="*"] {
+  background-color: green;
+}
+#message {
+  font-size: x-large;
+  color: red;
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+}
+#controls {
+  width: 70px;
+
+  width: 300px;
+  margin: 0 auto;
+}
+.up-down,
+.left-right {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+#container {
+  width: 300px;
+  margin: 0 auto;
+}
