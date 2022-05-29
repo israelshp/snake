@@ -6,15 +6,21 @@ const LEFT = "left";
 const RIGHT = "right";
 const DIRECTIONS = [UP, DOWN, LEFT, RIGHT];
 const GAME_OVER = "game over";
-const SPEED = 1000;
+const SPEED = 250;
 
 function randomPosition() {
+  // create random apple position
   const randomRow = Math.floor(Math.random() * BOARD_SIZE);
   const randomCol = Math.floor(Math.random() * BOARD_SIZE);
   return [randomRow, randomCol];
 }
 
 function makeBoard(snk) {
+  // generate the board's data as 2D-array
+  // 0 = empty
+  // 1 = snake body
+  // @ = snake head
+  // * = apple
   let board = new Array(BOARD_SIZE);
   for (let row = 0; row < board.length; row++) {
     board[row] = new Array(BOARD_SIZE);
@@ -27,22 +33,20 @@ function makeBoard(snk) {
     }
   }
 
+  head = snk[0];
+  board[head[0]][head[1]] = "@";
   board[apple[0]][apple[1]] = "*";
-  console.log(apple);
 
   board.forEach((row) => {
-    console.log(board.indexOf(row).toString().padEnd(5), row.join(" "));
+    console.debug(board.indexOf(row).toString().padEnd(5), row.join(" "));
   });
 
-  console.log("\n\n");
+  console.debug("\n\n");
 
   return board;
 }
 
 function step(snk, direction = LEFT) {
-  //   if (direction === lastDir) {
-  //     return [snk, board];
-  //   }
   lastDir = direction;
   let head = snk[0];
 
@@ -70,13 +74,24 @@ function step(snk, direction = LEFT) {
 }
 
 function validate(snk) {
-  snk.forEach((part) => {
-    //console.log(part);
+  const head = snk[0];
+
+  snk.forEach((part, partId) => {
+    // is the snake out of boundaries?
     if (part.some((idx) => idx >= BOARD_SIZE || idx < 0)) {
       throw new Error(GAME_OVER);
     }
+
+    // is the snake hitting itself?
+    if (partId > 0) {
+      if (JSON.stringify(head) === JSON.stringify(part)) {
+        throw new Error(GAME_OVER);
+      }
+    }
   });
-  const head = snk[0];
+
+
+  // is the snake hitting the apple?
   if (head[0] === apple[0] && head[1] === apple[1]) {
     snk = eat();
   }
@@ -101,20 +116,30 @@ function createHtmlTable(board) {
   return tbl;
 }
 
-function initGui(board) {
+function draw(board) {
   const container = document.querySelector("#container");
   container.replaceChildren();
   container.appendChild(createHtmlTable(board));
 }
 
-function move(dir) {
+function move(dir, byUser = true) {
+  
+  if (isGameOver) return;
+
+  if (byUser) {
+    console.log(`user changed direction to ${dir}`);
+  }
+  console.log(`${!byUser ? "auto" : ""} moving ${dir}`);
+
+  document.querySelectorAll(`.move-button`).forEach(b=>b.classList.remove("current-direction"));
+  document.querySelector(`#${dir}`).classList.add("current-direction");
+
   try {
     [snk, board] = step(snk, dir);
-    initGui(board);
+    draw(board);
     document.querySelectorAll(`.move-button`).forEach((btn) => {
       btn.disabled = btn.classList.contains(dir) ? true : false;
     });
-    // document.querySelector(`#${dir}`).disabled = true;
   } catch (error) {
     if (error.message === GAME_OVER) {
       gameOver();
@@ -125,12 +150,13 @@ function move(dir) {
 }
 
 function gameOver() {
+  isGameOver = true;
   document.querySelector("#message").innerHTML = "Game Over!";
   document
     .querySelectorAll('[data-fill="1"]')
     .forEach((elem) => (elem.dataset.fill = "x"));
   document
-    .querySelectorAll("move-button")
+    .querySelectorAll(".move-button")
     .forEach((btn) => (btn.disabled = true));
   clearInterval(mainInterval);
 }
@@ -162,8 +188,14 @@ function eat() {
       break;
   }
   snk.splice(0, 0, newPart);
-  console.log("snake got bigger", snk);
+  console.log(`snake size changed to ${snk.length}`, snk);
+  score += 1;
+  displayScore();
   return snk;
+}
+
+function displayScore() {
+  document.querySelector("#score").innerHTML = `Score: ${score}`;
 }
 
 // start
@@ -176,13 +208,53 @@ for (let index = 0; index < INIT_SNK_SIZE; index++) {
 let apple = randomPosition();
 let board = makeBoard(snk);
 let lastDir = RIGHT;
+let score = 0;
+let isGameOver = false;
 step(snk, lastDir);
 
 const mainInterval = setInterval(() => {
   try {
-    console.log(lastDir);
-    move(lastDir);
+    move(lastDir, false);
   } catch (error) {
     throw error;
   }
 }, SPEED);
+
+addEventListener("keydown", (e) => {
+  if (e.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+  switch (e.key) {
+    case "ArrowDown":
+      if (lastDir === UP) {
+        console.warn("can't change from up to down");
+        return
+      }
+      move(DOWN);
+      break;
+    case "ArrowUp":
+      if (lastDir === DOWN) {
+        console.warn("can't change from down to up");
+        return
+      }
+      move(UP);
+      break;
+    case "ArrowLeft":      
+      if (lastDir === RIGHT) {
+        console.warn("can't change from right to left");
+        return
+      }
+      move(LEFT);
+      break;
+    case "ArrowRight":
+      if (lastDir === LEFT) {
+        console.warn("can't change from left to right");
+        return
+      }
+      move(RIGHT);
+      break;
+    default:
+      return; // Quit when this doesn't handle the key event.
+  }
+  e.preventDefault();
+});

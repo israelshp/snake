@@ -9,20 +9,29 @@
 
     <script src="./snk.js"></script>
   </head>
-  <body onload="initGui(board)">
-    <div id="container"></div>
-    <div id="controls">
-      <div class="up-down">
-        <button class="move-button up down" id="up" onclick="move(UP)">▲</button>
+  <body onload="drawBoard(board)">
+    <div id="container" class="center"></div>
+    <div id="controls" class="center">
+      <div class="up-down center">
+        <button class="move-button up down" id="up" onclick="move(UP)">
+          ▲
+        </button>
       </div>
-      <div class="left-right">
-        <button class="move-button left right" id="left" onclick="move(LEFT)">◀</button>
-        <button class="move-button left right" id="right" onclick="move(RIGHT)">▶</button>
+      <div class="left-right center">
+        <button class="move-button left right" id="left" onclick="move(LEFT)" style="margin-right: 25px;">
+          ◀
+        </button>
+        <button class="move-button left right" id="right" onclick="move(RIGHT)">
+          ▶
+        </button>
       </div>
-      <div class="up-down">
-        <button class="move-button up down" id="down" onclick="move(DOWN)">▼</button>
+      <div class="up-down center">
+        <button class="move-button up down" id="down" onclick="move(DOWN)">
+          ▼
+        </button>
       </div>
     </div>
-    <div id="message"></div>
+    <div id="" class="center">Score: <span id="score">0</span></div>
+    <div id="message" class="center"></div>
   </body>
 </html>

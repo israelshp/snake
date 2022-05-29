@@ -1,17 +1,18 @@
 tr,
 td {
   /* border: 1px solid lightgray; */
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 table {
-  /* border-collapse: collapse; */
-  border: 1px solid white;
-
-  border: 1px solid #1c6ea4;
+  border: 1px solid #bbb;
   background-color: #ffffff;
   margin: 0 auto;
+  border-collapse: collapse;
+  box-shadow: 10px 10px 5px #80808057;
+  margin-bottom: 50px;    margin-top: 15vh;
+
 }
 
 td[data-fill="1"] {
@@ -21,28 +22,46 @@ td[data-fill="x"] {
   background-color: red;
 }
 td[data-fill="*"] {
-  background-color: green;
+  /* background-color: green; */
+}
+td[data-fill="*"]:before {
+  content: "🍎";
+  margin: -10px -10px;
+  line-height: 0px;
+}
+td[data-fill="@"] {
+  background-color: royalblue;
 }
 #message {
   font-size: x-large;
   color: red;
+}
+.center {
+  width: auto;
   margin: 0 auto;
-  width: 300px;
   text-align: center;
 }
-#controls {
-  width: 70px;
 
-  width: 300px;
-  margin: 0 auto;
+.move-button {
+  background-color: transparent;
+  border: 1px solid gray;
+  color: black;
+  padding: 5px 5px;
+  margin: 5px 5px;
+  /* width: 20px;
+  height: 20px; */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  /* font-size: 16px; */
+  font-size: 16px;
 }
-.up-down,
-.left-right {
-  margin: 0 auto;
-  width: fit-content;
+.move-button.current-direction {
+  border: 1px solid royalblue !important;
+  background-color: royalblue !important;
 }
-
-#container {
-  width: 300px;
-  margin: 0 auto;
+.move-button:disabled {
+  color: lightgray;
+  border-color: lightgray;
+  background-color: transparent;
 }
