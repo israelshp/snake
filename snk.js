@@ -162,7 +162,7 @@ function eat() {
       break;
   }
   snk.splice(0, 0, newPart);
-  console.log("sneak got bigger", snk);
+  console.log("snake got bigger", snk);
   return snk;
 }
 
