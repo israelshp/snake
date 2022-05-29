@@ -90,7 +90,6 @@ function validate(snk) {
     }
   });
 
-
   // is the snake hitting the apple?
   if (head[0] === apple[0] && head[1] === apple[1]) {
     snk = eat();
@@ -99,7 +98,7 @@ function validate(snk) {
 }
 
 function createHtmlTable(board) {
-  const tbl = document.createElement("table");
+  const tbl = document.querySelector("#container>table");
   const tbody = document.createElement("tbody");
   for (let i = 0; i < BOARD_SIZE; i++) {
     const row = document.createElement("tr");
@@ -117,13 +116,12 @@ function createHtmlTable(board) {
 }
 
 function draw(board) {
-  const container = document.querySelector("#container");
+  const container = document.querySelector("#container>table");
   container.replaceChildren();
-  container.appendChild(createHtmlTable(board));
+  createHtmlTable(board);
 }
 
 function move(dir, byUser = true) {
-  
   if (isGameOver) return;
 
   if (byUser) {
@@ -131,7 +129,9 @@ function move(dir, byUser = true) {
   }
   console.log(`${!byUser ? "auto" : ""} moving ${dir}`);
 
-  document.querySelectorAll(`.move-button`).forEach(b=>b.classList.remove("current-direction"));
+  document
+    .querySelectorAll(`.move-button`)
+    .forEach((b) => b.classList.remove("current-direction"));
   document.querySelector(`#${dir}`).classList.add("current-direction");
 
   try {
@@ -151,9 +151,13 @@ function move(dir, byUser = true) {
 
 function gameOver() {
   isGameOver = true;
-  document.querySelector("#message").innerHTML = "Game Over!";
+  document.querySelector("#container>table").classList.toggle("gameover");
+  document.querySelector("#message").innerHTML = "GAME OVER";
   document
     .querySelectorAll('[data-fill="1"]')
+    .forEach((elem) => (elem.dataset.fill = "x"));
+  document
+    .querySelectorAll('[data-fill="@"]')
     .forEach((elem) => (elem.dataset.fill = "x"));
   document
     .querySelectorAll(".move-button")
@@ -162,6 +166,9 @@ function gameOver() {
 }
 
 function eat() {
+  const tableElemnt = document.querySelector("#container>table");
+  tableElemnt.classList.add("apple");
+  setTimeout(() => tableElemnt.classList.remove("apple"), 1000);
   apple = randomPosition();
   console.log("Apple!");
   let head = snk[0];
@@ -195,10 +202,11 @@ function eat() {
 }
 
 function displayScore() {
-  document.querySelector("#score").innerHTML = `Score: ${score}`;
+  document.querySelector("#score").innerHTML = score;
 }
 
 // start
+
 const initPosition = parseInt(BOARD_SIZE / 2);
 let snk = [];
 for (let index = 0; index < INIT_SNK_SIZE; index++) {
@@ -210,51 +218,59 @@ let board = makeBoard(snk);
 let lastDir = RIGHT;
 let score = 0;
 let isGameOver = false;
-step(snk, lastDir);
 
-const mainInterval = setInterval(() => {
-  try {
-    move(lastDir, false);
-  } catch (error) {
-    throw error;
-  }
-}, SPEED);
+function start() {
+  isGameOver = false;
+  document.querySelectorAll(`.move-button`).forEach((btn) => {
+    btn.disabled = false;
+  });
+  document.querySelector("#start").style.display = "none";
+  step(snk, lastDir);
 
-addEventListener("keydown", (e) => {
-  if (e.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
-  switch (e.key) {
-    case "ArrowDown":
-      if (lastDir === UP) {
-        console.warn("can't change from up to down");
-        return
-      }
-      move(DOWN);
-      break;
-    case "ArrowUp":
-      if (lastDir === DOWN) {
-        console.warn("can't change from down to up");
-        return
-      }
-      move(UP);
-      break;
-    case "ArrowLeft":      
-      if (lastDir === RIGHT) {
-        console.warn("can't change from right to left");
-        return
-      }
-      move(LEFT);
-      break;
-    case "ArrowRight":
-      if (lastDir === LEFT) {
-        console.warn("can't change from left to right");
-        return
-      }
-      move(RIGHT);
-      break;
-    default:
-      return; // Quit when this doesn't handle the key event.
-  }
-  e.preventDefault();
-});
+  const mainInterval = setInterval(() => {
+    try {
+      move(lastDir, false);
+    } catch (error) {
+      throw error;
+    }
+  }, SPEED);
+
+  addEventListener("keydown", (e) => {
+    if (e.defaultPrevented) {
+      return; // Do nothing if the event was already processed
+    }
+    switch (e.key) {
+      case "ArrowDown":
+        if (lastDir === UP) {
+          console.warn("can't change from up to down");
+          return;
+        }
+        move(DOWN);
+        break;
+      case "ArrowUp":
+        if (lastDir === DOWN) {
+          console.warn("can't change from down to up");
+          return;
+        }
+        move(UP);
+        break;
+      case "ArrowLeft":
+        if (lastDir === RIGHT) {
+          console.warn("can't change from right to left");
+          return;
+        }
+        move(LEFT);
+        break;
+      case "ArrowRight":
+        if (lastDir === LEFT) {
+          console.warn("can't change from left to right");
+          return;
+        }
+        move(RIGHT);
+        break;
+      default:
+        return; // Quit when this doesn't handle the key event.
+    }
+    e.preventDefault();
+  });
+}

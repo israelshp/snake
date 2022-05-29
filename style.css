@@ -1,39 +1,56 @@
+body {
+  font-family: monospace;
+}
+
+#container {
+  margin-bottom: 50px;
+}
+
 tr,
 td {
-  /* border: 1px solid lightgray; */
   width: 20px;
   height: 20px;
 }
 
 table {
-  border: 1px solid #bbb;
+  border: 3px solid #555;
   background-color: #ffffff;
   margin: 0 auto;
   border-collapse: collapse;
-  box-shadow: 10px 10px 5px #80808057;
-  margin-bottom: 50px;    margin-top: 15vh;
-
+  margin-top: 15vh;
 }
-
-td[data-fill="1"] {
-  background-color: black;
+td[data-fill="1"]:before {
+  content: "🟡";
+  margin: -10px -10px;
+  line-height: 0px;
 }
-td[data-fill="x"] {
-  background-color: red;
+.apple td[data-fill="1"]:before {
+  content: "🟢";
+  margin: -10px -10px;
+  line-height: 0px;
 }
-td[data-fill="*"] {
-  /* background-color: green; */
+td[data-fill="x"]:before {
+  content: "😵";
+  margin: -10px -10px;
+  line-height: 0px;
 }
 td[data-fill="*"]:before {
   content: "🍎";
   margin: -10px -10px;
   line-height: 0px;
 }
-td[data-fill="@"] {
-  background-color: royalblue;
+td[data-fill="@"]:before {
+  content: "🙂";
+  margin: -10px -10px;
+  line-height: 0px;
+}
+.apple td[data-fill="@"]:before {
+  content: "🤩";
+  margin: -10px -10px;
+  line-height: 0px;
 }
 #message {
-  font-size: x-large;
+  font-size: xx-large;
   color: red;
 }
 .center {
@@ -42,26 +59,74 @@ td[data-fill="@"] {
   text-align: center;
 }
 
-.move-button {
+button {
   background-color: transparent;
   border: 1px solid gray;
   color: black;
   padding: 5px 5px;
   margin: 5px 5px;
-  /* width: 20px;
-  height: 20px; */
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  /* font-size: 16px; */
   font-size: 16px;
+  border-radius: 5px;
+  width: 50px;
 }
-.move-button.current-direction {
+button.current-direction,
+#start:hover {
   border: 1px solid royalblue !important;
   background-color: royalblue !important;
+  color: white;
 }
-.move-button:disabled {
+button:disabled {
   color: lightgray;
   border-color: lightgray;
   background-color: transparent;
+}
+
+.gameover {
+  border: 3px solid #ff0000;
+  background-color: lightgrey;
+  animation: crash 1s ease 0s 1 normal none;
+}
+.apple {
+  animation: eat 0.5s ease 0s 1 normal none;
+}
+
+@keyframes crash {
+  0%,
+  100% {
+    transform: translateX(0%);
+    transform-origin: 50% 50%;
+  }
+
+  15% {
+    transform: translateX(-30px) rotate(-6deg);
+  }
+
+  30% {
+    transform: translateX(15px) rotate(6deg);
+  }
+
+  45% {
+    transform: translateX(-15px) rotate(-3.6deg);
+  }
+
+  60% {
+    transform: translateX(9px) rotate(2.4deg);
+  }
+
+  75% {
+    transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
+@keyframes eat {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 30px 10px #4caf50;
+  }
 }

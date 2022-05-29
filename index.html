@@ -9,29 +9,53 @@
 
     <script src="./snk.js"></script>
   </head>
-  <body onload="drawBoard(board)">
-    <div id="container" class="center"></div>
+  <body onload="draw(board)">
+    <div id="container" class="center">
+      <table></table>
+      <div id="" class="center">Score: <span id="score">0</span></div>
+    </div>
     <div id="controls" class="center">
       <div class="up-down center">
-        <button class="move-button up down" id="up" onclick="move(UP)">
+        <button
+          class="move-button up down"
+          id="up"
+          onclick="move(UP)"
+          disabled="disabled"
+        >
           ▲
         </button>
       </div>
       <div class="left-right center">
-        <button class="move-button left right" id="left" onclick="move(LEFT)" style="margin-right: 25px;">
+        <button
+          class="move-button left right"
+          id="left"
+          onclick="move(LEFT)"
+          disabled="disabled"
+        >
           ◀
         </button>
-        <button class="move-button left right" id="right" onclick="move(RIGHT)">
+
+        <button id="start" onclick="start()">Start</button>
+        <button
+          class="move-button left right"
+          id="right"
+          onclick="move(RIGHT)"
+          disabled="disabled"
+        >
           ▶
         </button>
       </div>
       <div class="up-down center">
-        <button class="move-button up down" id="down" onclick="move(DOWN)">
+        <button
+          class="move-button up down"
+          id="down"
+          onclick="move(DOWN)"
+          disabled="disabled"
+        >
           ▼
         </button>
       </div>
     </div>
-    <div id="" class="center">Score: <span id="score">0</span></div>
     <div id="message" class="center"></div>
   </body>
 </html>
