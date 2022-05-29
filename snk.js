@@ -218,16 +218,29 @@ let board = makeBoard(snk);
 let lastDir = RIGHT;
 let score = 0;
 let isGameOver = false;
+let mainInterval;
 
 function start() {
-  isGameOver = false;
+  if (isGameOver) {
+    isGameOver = false;
+    document.querySelector("#container>table").classList.toggle("gameover");
+
+    snk = [];
+    for (let index = 0; index < INIT_SNK_SIZE; index++) {
+      snk.push([initPosition, initPosition - index]);
+    }
+    apple = randomPosition();
+    board = makeBoard(snk);
+    lastDir = RIGHT;
+    score = 0;
+  }
+  document.querySelector("#message").innerHTML = "";
   document.querySelectorAll(`.move-button`).forEach((btn) => {
     btn.disabled = false;
   });
-  document.querySelector("#start").style.display = "none";
   step(snk, lastDir);
 
-  const mainInterval = setInterval(() => {
+  mainInterval = setInterval(() => {
     try {
       move(lastDir, false);
     } catch (error) {
@@ -274,3 +287,7 @@ function start() {
     e.preventDefault();
   });
 }
+
+addEventListener("keydown", (e) => {
+  if (e.key === " ") start();
+});
