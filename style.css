@@ -14,7 +14,7 @@ body {
 }
 
 #container {
-  margin-top: 2vh;
+  margin: 2vh;
 }
 
 tr,
@@ -25,7 +25,7 @@ td {
 
 table {
   border: 3px solid #555;
-  background-color: #ffffff;
+  background-color: #000000;
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 20pt;
@@ -36,17 +36,53 @@ td[data-fill="1"]:before {
 .apple td[data-fill="1"]:before {
   content: "🟢";
 }
-td[data-fill="x"]:before {
+td[data-fill="x"][data-variation="0"]:before {
   content: "😵";
 }
-td[data-fill="*"]:before {
+td[data-fill="x"][data-variation="1"]:before {
+  content: "🥴";
+}
+td[data-fill="x"][data-variation="2"]:before {
+  content: "😣";
+}
+td[data-fill="x"][data-variation="3"]:before {
+  content: "💀";
+}
+td[data-fill="x"][data-variation="4"]:before {
+  content: "😭";
+}
+td[data-fill="*"][data-variation="0"]:before {
   content: "🍎";
+}
+td[data-fill="*"][data-variation="1"]:before {
+  content: "🍭";
+}
+td[data-fill="*"][data-variation="2"]:before {
+  content: "🍕";
+}
+td[data-fill="*"][data-variation="3"]:before {
+  content: "🍔";
+}
+td[data-fill="*"][data-variation="4"]:before {
+  content: "🥪";
 }
 td[data-fill="@"]:before {
   content: "🙂";
 }
-.apple td[data-fill="@"]:before {
+.apple td[data-fill="@"][data-variation="0"]:before {
   content: "🤩";
+}
+.apple td[data-fill="@"][data-variation="1"]:before {
+  content: "😁";
+}
+.apple td[data-fill="@"][data-variation="2"]:before {
+  content: "😋";
+}
+.apple td[data-fill="@"][data-variation="3"]:before {
+  content: "🤣";
+}
+.apple td[data-fill="@"][data-variation="4"]:before {
+  content: "😎";
 }
 #message {
   font-size: xx-large;
@@ -107,7 +143,6 @@ button:disabled {
 
 .gameover {
   border: 3px solid #ff0000;
-  background-color: lightgrey;
   animation: crash 1s ease 0s 1 normal none;
 }
 .apple {

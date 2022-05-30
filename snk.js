@@ -107,6 +107,7 @@ function createHtmlTable(board) {
       cell.dataset.row = i;
       cell.dataset.col = j;
       cell.dataset.fill = board[i][j];
+      cell.dataset.variation = currentSymbolVariation;
       row.appendChild(cell);
     }
     tbody.appendChild(row);
@@ -173,6 +174,7 @@ function eat() {
   tableElemnt.classList.add("apple");
   setTimeout(() => tableElemnt.classList.remove("apple"), 1000);
   apple = randomPosition();
+  currentSymbolVariation = Math.floor(Math.random() * 5);
   console.log("Apple!");
   let head = snk[0];
   let newPart;
@@ -237,6 +239,7 @@ let score = 0;
 let isGameOver = false;
 let mainInterval;
 let timeStarted;
+let currentSymbolVariation = Math.floor(Math.random() * 5);
 
 function start() {
   if (isGameOver) {
