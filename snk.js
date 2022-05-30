@@ -153,7 +153,8 @@ function move(dir, byUser = true) {
 function gameOver() {
   isGameOver = true;
   document.querySelector("#container>table").classList.toggle("gameover");
-  document.querySelector("#message").innerHTML = "GAME OVER<div style='font-size: 10pt'>Press spacebar to restart</div>";
+  document.querySelector("#message").innerHTML =
+    "GAME OVER<div style='font-size: 10pt'>Press spacebar to restart</div>";
   document
     .querySelectorAll('[data-fill="1"]')
     .forEach((elem) => (elem.dataset.fill = "x"));
@@ -164,6 +165,7 @@ function gameOver() {
     .querySelectorAll(".move-button")
     .forEach((btn) => (btn.disabled = true));
   clearInterval(mainInterval);
+  clearInterval(timerInterval);
 }
 
 function eat() {
@@ -207,9 +209,13 @@ function displayRecord(score) {
   let record = localStorage.getItem("record");
   if (!record || record < score) {
     localStorage.setItem("record", score);
-    localStorage.setItem("datetime", new Date().toLocaleString("he-IL"))
+    localStorage.setItem("datetime", new Date().toLocaleString("he-IL"));
   }
-  document.querySelector("#record").innerHTML = `Best Score: ${localStorage.getItem("record")}<br/>${localStorage.getItem("datetime")}`;
+  document.querySelector(
+    "#record"
+  ).innerHTML = `Best Score: ${localStorage.getItem(
+    "record"
+  )}<br/>${localStorage.getItem("datetime")}`;
 }
 
 function displayScore() {
@@ -230,6 +236,7 @@ let lastDir = RIGHT;
 let score = 0;
 let isGameOver = false;
 let mainInterval;
+let timeStarted;
 
 function start() {
   if (isGameOver) {
@@ -245,10 +252,21 @@ function start() {
     lastDir = RIGHT;
     score = 0;
   }
+  timeStarted = new Date();
   document.querySelector("#message").innerHTML = "";
   document.querySelectorAll(`.move-button`).forEach((btn) => {
     btn.disabled = false;
   });
+
+  timerInterval = setInterval(() => {
+    const secElapsed = Math.floor((new Date() - timeStarted) / 1000);
+    const displayMin = parseInt(secElapsed / 60);
+    const displaySec = parseInt(secElapsed % 60);
+    document.querySelector("#time").innerHTML = `${
+      displayMin < 10 ? "0" : ""
+    }${displayMin}:${displaySec < 10 ? "0" : ""}${displaySec}`;
+  }, 1000);
+
   step(snk, lastDir);
 
   mainInterval = setInterval(() => {

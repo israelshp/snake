@@ -15,6 +15,7 @@ body {
 
 #container {
   margin-bottom: 50px;
+  margin-top: 15vh;
 }
 
 tr,
@@ -28,7 +29,6 @@ table {
   background-color: #ffffff;
   margin: 0 auto;
   border-collapse: collapse;
-  margin-top: 15vh;
 }
 td[data-fill="1"]:before {
   content: "🟡";
@@ -111,6 +111,10 @@ button:disabled {
 #record {
   font-size: 12pt;
   margin-top: 10px;
+}
+
+#time {
+  height: 10px;
 }
 
 .gameover {
