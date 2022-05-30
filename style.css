@@ -14,14 +14,13 @@ body {
 }
 
 #container {
-  margin-bottom: 50px;
-  margin-top: 15vh;
+  margin-top: 2vh;
 }
 
 tr,
 td {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 table {
@@ -29,36 +28,25 @@ table {
   background-color: #ffffff;
   margin: 0 auto;
   border-collapse: collapse;
+  font-size: 20pt;
 }
 td[data-fill="1"]:before {
   content: "🟡";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 .apple td[data-fill="1"]:before {
   content: "🟢";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 td[data-fill="x"]:before {
   content: "😵";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 td[data-fill="*"]:before {
   content: "🍎";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 td[data-fill="@"]:before {
   content: "🙂";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 .apple td[data-fill="@"]:before {
   content: "🤩";
-  margin: -10px -10px;
-  line-height: 0px;
 }
 #message {
   font-size: xx-large;
