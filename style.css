@@ -103,9 +103,9 @@ button:disabled {
   background-color: #4caf50;
   color: white;
 }
-#score-container {
-  font-size: 18pt;
-  margin-top: 15px;
+#score {
+  font-size: 36pt;
+  margin-top: 25px;
 }
 
 #record {
