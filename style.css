@@ -90,6 +90,15 @@ button:disabled {
   background-color: #4caf50;
   color:white;
 }
+#score-container {
+  font-size: 18pt;
+  margin-top: 15px;
+}
+
+#record {
+  font-size: 12pt;
+  margin-top: 10px;
+}
 
 .gameover {
   border: 3px solid #ff0000;

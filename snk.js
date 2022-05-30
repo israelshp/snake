@@ -116,6 +116,7 @@ function createHtmlTable(board) {
 }
 
 function draw(board) {
+  displayRecord(-1);
   const container = document.querySelector("#container>table");
   container.replaceChildren();
   createHtmlTable(board);
@@ -152,7 +153,7 @@ function move(dir, byUser = true) {
 function gameOver() {
   isGameOver = true;
   document.querySelector("#container>table").classList.toggle("gameover");
-  document.querySelector("#message").innerHTML = "GAME OVER";
+  document.querySelector("#message").innerHTML = "GAME OVER<div style='font-size: 10pt'>Press spacebar to restart</div>";
   document
     .querySelectorAll('[data-fill="1"]')
     .forEach((elem) => (elem.dataset.fill = "x"));
@@ -197,8 +198,18 @@ function eat() {
   snk.splice(0, 0, newPart);
   console.log(`snake size changed to ${snk.length}`, snk);
   score += 1;
+  displayRecord(score);
   displayScore();
   return snk;
+}
+
+function displayRecord(score) {
+  let record = localStorage.getItem("record");
+  if (!record || record < score) {
+    localStorage.setItem("record", score);
+    localStorage.setItem("datetime", new Date().toLocaleString("he-IL"))
+  }
+  document.querySelector("#record").innerHTML = `Best Score: ${localStorage.getItem("record")}<br/>${localStorage.getItem("datetime")}`;
 }
 
 function displayScore() {
